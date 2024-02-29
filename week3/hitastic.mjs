@@ -127,9 +127,15 @@ app.post('/songs/delete/:id', (req,res) => {
 //A POST route to add a new song;
 app.post('/songs/addnewsong/', (req,res) =>{
     try{
-        const newSong = db.prepare('INSERT INTO wadsongs(title,artist,year,downloads,price,quantity) VALUES (?,?,?,?,?,?)')
-        const results = newSong.run(req.body.title,req.body.artist,req.body.year,req.body.downloads,req.body.price,req.body.quantity)
-        res.json({id: newSong.lastInsertRowId});
+        //error checking, if any of the fields are blank then it would return the error message
+        if(req.body.title == ""|| req.body.artist == ""|| req.body.year == ""|| req.body.downloads == ""|| req.body.price == ""|| req.body.quantity == ""){
+            res.status(400).json({error: "One or more of your fields are blank" });
+        }else{
+            const newSong = db.prepare('INSERT INTO wadsongs(title,artist,year,downloads,price,quantity) VALUES (?,?,?,?,?,?)')
+            const results = newSong.run(req.body.title,req.body.artist,req.body.year,req.body.downloads,req.body.price,req.body.quantity)
+            res.json({id: newSong.lastInsertRowId});
+        }
+    //error checking, if there is a internal server error then return the error message
     }catch(error){
         res.status(500).json({error: error.message})
     }
@@ -140,16 +146,12 @@ app.post('/songs/addnewsong/', (req,res) =>{
 app.put('/songs/update/:id', (req,res) => {
     try{
         const stmt = db.prepare('UPDATE wadsongs SET quantity=?,price=? WHERE id=?')
-        //body is for the json and params is for the url
+        //body(POST/PUT) is for the json and params(GET) is for the url
         const results = stmt.run(req.body.quantity, req.body.price, req.params.id);
         res.status(results.changes ? 200:404).json({success: results.changes ? true: false});
     }catch(error){
         res.status(500).json({error: error.message});
     }
 });
-
-
-
-
 
 app.listen(3300);
