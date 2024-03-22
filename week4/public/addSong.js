@@ -7,7 +7,7 @@
 async function ajaxAdd(newSong){
     try{
         //sending the request to the localhost URL 
-        const response = await fetch('http://localhost:3300/songs/addnewsong', {
+        const response = await fetch('http://localhost:3400/songs/addnewsong', {
 
              //read in the parameters artist title etc n add to database    
             method: 'POST',
