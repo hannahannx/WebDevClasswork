@@ -3,8 +3,8 @@
 
 //imports
 import "leaflet";
-import "leaflet/dist/leaflet.css"
-import markerIcon from "leaflet/dist/images/marker-icon.png"
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
 
 //creating a map
 const map = L.map("map1");
@@ -18,11 +18,11 @@ L.tileLayer
 
 
 //this would be for the default view 
-const pos = [74,40.75];
-map.setView(pos, 13);
-
-L.marker.prototype.seticon(L.icon({
-    iconurl:markerIcon
-}))
+const pos = [50.908,-1.4]
+map.setView(pos, 14);
 
 L.marker(pos).addTo(map);
+
+//popup
+const marker = L.marker(pos).addTo(map);
+marker.bindPopup("Solent Uni");
