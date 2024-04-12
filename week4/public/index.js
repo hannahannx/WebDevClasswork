@@ -22,10 +22,13 @@ async function ajaxSearch(artistName) {
         // display JSON
         console.log("JSON returned:");
         console.log(JSON.stringify(allSongs));
-       
+    
+
 
         // Prevents adding the new artist song infomation at the end of the current results
-        document.getElementById("artistSearchResults").innerHTML = "";
+        const resultsDiv = document.getElementById("artistSearchResults");
+
+        resultsDiv.innerHTML = "";
 
         //loop through the array which is returend by the json file    
         allSongs.forEach(song => {
@@ -45,22 +48,22 @@ async function ajaxSearch(artistName) {
             Price: ${song.price} <br>
             Quantity:${song.quantity} <br>`
 
-            //place the button here
-            para.appendChild(buySongButton);
             
             //Add the paragrapgh to the <div>(question 2)
             document.getElementById('artistSearchResults').appendChild(para)
            
             //Create a 'buy button' with an event handler - NEED TO COMPLETE
-            buySongButton.addEventListener('click', async(e) =>
-            {
+            buySongButton.addEventListener('click', async() =>{
                 const response2 = await fetch(`http://localhost:3400/songs/buy/${song.id}`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json'} ,
                 });
             })
 
 
+        //place the button here
+         para.appendChild(buySongButton);
+
+         resultsDiv.appendChild(para)
             //non DOM way of displaying the JSON results
              /*
              html +=
@@ -73,12 +76,15 @@ async function ajaxSearch(artistName) {
             <br/>`; */
             
         });
+        
         //non DOM of replacing the content into the results section
         //document.getElementById('artistSearchResults').innerHTML = html;
     }catch (e) {
         alert(`Error: ${e}`);
     }
-}
+ //place the button here
+
+};
 
 
 //AJAX running when we click a button

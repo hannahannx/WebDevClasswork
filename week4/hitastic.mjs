@@ -7,6 +7,7 @@ import Database from 'better-sqlite3'
 import cors from 'cors'
 
 // creating application varibles 
+const PORT = 3400;
 const app = express();
 const db = new Database("wadsongs.db");
 
@@ -155,4 +156,5 @@ app.put('/songs/update/:id', (req,res) => {
     }
 });
 
-app.listen(3400);
+app.listen(PORT);
+console.log(`Server running on port ${PORT}.`);
