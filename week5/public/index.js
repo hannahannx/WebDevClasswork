@@ -19,10 +19,12 @@ L.tileLayer
 
 //this would be for the default view 
 const pos = [50.908,-1.4]
-map.setView(pos, 14);
+map.setView(pos, 14)
 
 L.marker(pos).addTo(map);
 
 //popup
 const marker = L.marker(pos).addTo(map);
-marker.bindPopup("Solent Uni");
+
+const description = prompt("Please enter as description for the marker")
+marker.bindPopup(description);
