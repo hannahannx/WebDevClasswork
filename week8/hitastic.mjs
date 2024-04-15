@@ -2,20 +2,89 @@
 //server code
 
 // importaning modules to use 
-import express from 'express'
-import Database from 'better-sqlite3'
-import cors from 'cors'
+import express from 'express';
+import Database from 'better-sqlite3';
+import cors from 'cors';
+import expressSession from 'express-session';
+import betterSqlite3Session from 'express-session-better-sqlite3'; 
+//import bcrypt from 'bycrpt';
 
 // creating application varibles 
 const PORT = 3800;
 const app = express();
 const db = new Database("wadsongs.db");
+const sessDb = new Database("sessionDb.db")
+//create an object for creating the session store
+//SQLiteStore is simular in concept to a class
+const SqliteStore = betterSqlite3Session(expressSession, sessDb);
+//password hashing
+//const encPass = await bcrypt.hash(pass,10)
+
 
 //use to read the JSON data from the request body
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({extended:false}));
+app.use(expressSession({
+    //specify the session store to be used
+    store: new SqliteStore(),
+    //a secret used to digitally sign session cookie, use soemthing unguessable in a real application
+    secret: 'BinnieAndClyde',
+    //regenerate session on each request (keeping the session active)
+    resave: true,
+    //save session to store before data is stored in it (disabled as this uncessarily creates empty sessions)
+    saveUninitialized: false,
+    //reset teh cookie for every http request. 
+    rolling:true,
+    //destroy session - when it is set to null delteed etc
+    unset: 'destroy',
+    //useful if using a proxy to access your server 
+    proxy:true,
+    //properties of session cookie
+    cookie: {
+        maxAge: 60000, // 60000 ms 10 mins expiry time
+        httpOnly: false //allow client side code to access the cookie otherwise it's kept to the http MESSAGES
+    }
+}));
+
+// Login route
+app.post('/login', (req, res) => {
+    const smth = db.prepare(`SELECT * FROM ht_users WHERE username=? AND password=?`)
+    const results = smth.all(req.body.username,req.body.password);
+    if (results.length == 1){
+        req.session.username = req.body.username;
+        console.log("Sucessfully logged in!")
+        res.json("Sucessfully logged in!")
+    }else{
+        res.status(401).json({error: "Incorrect login combination"});
+    }
+});
+
+//middle ware routes 
+app.use( (req, res, next) => {
+    if(["POST", "DELETE"].indexOf(req.method) == -1) {
+        next();
+    } else {
+        if(req.session.username) { 
+            next();
+        } else {
+            res.status(401).json({error: "You're not logged in. Go away!"});
+        }
+    }
+});
+
+
+// Logout route
+app.post('/logout', (req, res) => {
+    req.session = null;
+    res.json({'success': 1 });
+});
+
+// 'GET' login route - useful for clients to obtain currently logged in user
+app.get('/login', (req, res) => {
+    res.json({username: req.session.username || null} );
+});
 
 
 //WEEK 3 
