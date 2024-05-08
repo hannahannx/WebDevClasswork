@@ -16,6 +16,25 @@ app.get('/', (req,res)=>{
     res.send('Hello World ');
 });
 
+//current time route
+app.get('/time', (req,res)=>{
+    try{
+        res.send(`There have been ${Date.now()} milliseconds since 1/1/70.`);
+    }catch (error){
+        res.status(500).json({error: error.message });      
+    }
+});
+
+//Greeting user based on the name in the parameter
+app.get('/greet/:userName', (req,res)=>{
+    try{
+    const userName = req.params.userName
+    res.send(`Hello ${userName}`)
+    }catch (error){
+        res.status(500).json({error: error.message });      
+    }
+});
+
 //WEEK 1
 // search for all songs given artist 
 app.get('/songs/artist/:artist', (req,res) => {
@@ -85,9 +104,9 @@ app.post('/songs/delete/:id', (req,res) => {
         const stmt = db.prepare('DELETE FROM wadsongs WHERE id=?');
         const results = stmt.run(req.params.id);
         if(results.changes == 1){
-            res.json({sucess:1});
+            res.json({success:1});
         } else {
-            res.status(404).json({error: error.message});
+            res.status(404).json({error:`No song with that id to delete`});
         }
         res.json(results);
     }catch(error){
