@@ -12,11 +12,13 @@ const db = new Database("wadsongs.db");
 
 app.set('view engine', 'ejs');
 
-app.get('/artist/:artist.html', (req, res) => {
-    const stmt = db.prepare('SELECT * FROM wadsongs WHERE artist=?');
-    const results = stmt.all(req.params.artist);
-    const songsHTML = results.map ( song => `${song.title} by ${song.artist}, year ${song.year}, quantity ${song.quantity}, price ${song.price}`).join('<br />');
-    res.send(`<div style="background-color: blue; color: white"> ${songsHTML} </div>`);
+
+app.get('/', (req,res) => {
+    const response = fetch("http://localhost:3101/artist/Christie.html")
+    .then(response => response.text())
+    .then(text => {
+        res.render('index' , {songs: text});
+    });
 });
 
 //A GET route find a song with a given ID
@@ -53,4 +55,5 @@ app.put('/songs/update/:id', (req,res) => {
     }
 });
 
-app.listen(3100);
+
+app.listen(3101);
