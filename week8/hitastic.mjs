@@ -56,6 +56,7 @@ app.post('/login', (req, res) => {
         req.session.username = req.body.username;
         console.log("Sucessfully logged in!")
         res.json("Sucessfully logged in!")
+        msg = `Logged in as ${req.session.username}`
     }else{
         res.status(401).json({error: "Incorrect login combination"});
     }
