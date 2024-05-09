@@ -31,9 +31,7 @@ app.get('/artist/:artist.html', (req, res) => {
 app.get('/', (req,res) => {
     const response = fetch("http://localhost:3400/index.html") // {for inputted value based on the user input}
     .then(response => response.json())
-    .then(songs => {
-        res.render('index' , {songs: songs});
-    });
+        res.render('index');
 });
 
 //addSongs route 

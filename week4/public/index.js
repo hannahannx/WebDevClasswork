@@ -24,7 +24,7 @@ async function ajaxSearch(artistName) {
         console.log(JSON.stringify(allSongs));
     
 
-
+        
         // Prevents adding the new artist song infomation at the end of the current results
         const resultsDiv = document.getElementById("artistSearchResults");
 
@@ -54,12 +54,23 @@ async function ajaxSearch(artistName) {
            
             //Create a 'buy button' with an event handler - NEED TO COMPLETE
             buySongButton.addEventListener('click', async() =>{
-                const response2 = await fetch(`http://localhost:3400/songs/buy/${song.id}`, {
+                try{
+                   const response2 = await fetch(`http://localhost:3400/songs/buy/${song.id}`, {
                     method: 'POST',
-                });
+                }); 
+                //checking the status code and returning error if on the page
+                if (response.status == 200) {
+                    alert(`Bought Song : "${song.title}"`)
+                }else{
+                    const info = await response.json();
+                    alert(info)
+                }
+                }catch (e){
+                    alert(`Error with song ${song.title}: ${e}`)
+                }        
             })
 
-
+            
         //place the button here
          para.appendChild(buySongButton);
 
