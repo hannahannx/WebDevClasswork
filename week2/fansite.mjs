@@ -19,9 +19,9 @@ app.set('view engine', 'ejs');
 app.get('/', (req,res) => {
     const response = fetch("http://localhost:3101/artist/Christie.html")
     .then(response => response.json())
-    .then(songs => {
-        res.render('index' , {songs: songs});
-    });
+
+        res.render('index' );
+    
 });
 
 //A GET route find a song with a given ID

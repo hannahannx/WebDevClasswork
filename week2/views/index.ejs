@@ -27,14 +27,14 @@
     <h1>Christie</h1>
     <section>
         <p>
-            <% songs.forEach(song=> {%>
-                Title: <%- song.title %> <br>
-                    Artist: <%- song.artist %> <br>
-                        Year: <%- song.year %> <br>
-                            Downloads: <%- song.downloads %> <br>
-                                Price: <%- song.price %> <br>
-                                    Quantity: <%- song.quantity %> <br>
-                                        <% }) %> <br>
+            <%songs.forEach(song=>{%>
+                Title:<%-song.title%><br>
+                    Artist:<%-song.artist%><br>
+                        Year:<%-song.year%><br>
+                            Downloads:<%-song.downloads%><br>
+                                Price:<%-song.price%><br>
+                                    Quantity:<%-song.quantity%><br>
+                                        <%})%><br>
         </p>
     </section>
 </body>
