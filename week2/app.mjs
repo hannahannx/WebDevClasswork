@@ -10,6 +10,9 @@ this may cause an error in your server connection
 const app = express();
 const db = new Database("wadsongs.db");
 
+
+app.use(express.urlencoded({extended:false}));
+
 app.set('view engine', 'ejs');
 
 app.get('/artist/:artist.html', (req, res) => {

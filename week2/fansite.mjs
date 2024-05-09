@@ -10,14 +10,17 @@ this may cause an error in your server connection
 const app = express();
 const db = new Database("wadsongs.db");
 
+app.use(express.urlencoded({extended:false}));
+
+
 app.set('view engine', 'ejs');
 
 
 app.get('/', (req,res) => {
     const response = fetch("http://localhost:3101/artist/Christie.html")
-    .then(response => response.text())
-    .then(text => {
-        res.render('index' , {songs: text});
+    .then(response => response.json())
+    .then(songs => {
+        res.render('index' , {songs: songs});
     });
 });
 
