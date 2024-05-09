@@ -78,8 +78,10 @@ app.use( (req, res, next) => {
 
 // Logout route
 app.post('/logout', (req, res) => {
+    res.json(`Successfully logged out ${req.session.username} `)
     req.session = null;
     res.json({'success': 1 });
+    
 });
 
 // 'GET' login route - useful for clients to obtain currently logged in user
@@ -101,9 +103,7 @@ app.get('/artist/:artist.html', (req, res) => {
 app.get('/', (req,res) => {
     const response = fetch("http://localhost:3400/index.html") // {for inputted value based on the user input}
     .then(response => response.json())
-    .then(songs => {
-        res.render('index' , {songs: songs});
-    });
+        res.render('index' );
 });
 
 //addSongs route 
@@ -185,11 +185,14 @@ app.post('/songs/delete/:id', (req,res) => {
         const results = stmt.run(req.params.id);
         if(results.changes == 1){
             res.json({sucess:1});
+            alert("Successfully deleted!")
         } else {
+            //means its not in the data base - song not found
             res.status(404).json({error: error.message});
         }
         res.json(results);
     }catch(error){
+        //internal error
         res.status(500).json({error: error.message});
     }
 });
