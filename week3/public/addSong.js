@@ -7,8 +7,7 @@
 async function ajaxAdd(newSong){
     try{
         //sending the request to the localhost URL 
-        const response = await fetch('http://localhost:3300/songs/addnewsong', {
-
+        const response = await fetch('http://localhost:3300/songs/addSong.html', {
              //read in the parameters artist title etc n add to database    
             method: 'POST',
             headers: {
@@ -19,8 +18,10 @@ async function ajaxAdd(newSong){
         //checking the type of error message for the server an returning the correct code
         if (response.status == 400){
             alert(`One or more of your fields are blank`)
-        }else{
+        }else if (response.status == 200){
             alert(`Added new song to database`)
+        }else {
+            alert(`Unknown error: code ${response.status}`);
         }
     }catch(error) {
         alert(`Error ${error}`);
@@ -28,7 +29,7 @@ async function ajaxAdd(newSong){
 };
 
 //AJAX running to add to database when sumbit button pressed
-document.getElementById('addNewSong').addEventListener('click', ()=> {
+document.getElementById('addNewSong').addEventListener('click', async()=> {
     const title = document.getElementById('songTitle').value;
     const artist = document.getElementById('artistName').value;
     const year = document.getElementById('songYear').value;
@@ -43,9 +44,13 @@ document.getElementById('addNewSong').addEventListener('click', ()=> {
         "downloads": downloads,
         "price": price,
         "quantity": quantity
+    };
+    try{
+        ajaxAdd(newSong)
+    }catch(e){
+        alert(`Error ${e}`);
     }
-
-    ajaxAdd(newSong)
+    
 });
 
 //

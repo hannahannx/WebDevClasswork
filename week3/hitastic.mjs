@@ -4,6 +4,7 @@
 import express from 'express'
 import Database from 'better-sqlite3'
 import cors from 'cors'
+import fetch from 'node-fetch'
 
 // creating application varibles 
 const app = express();
@@ -39,7 +40,7 @@ app.get('/songs/addsong', (req,res) => {
     const response = fetch("http://localhost:3300/addSong.html") // {for inputted value based on the user input}
     .then(response => response.json())
     .then(add => {
-        res.render('addSongs' , {add: add});
+        res.render('addSong' , {add: add});
     });
 });
 

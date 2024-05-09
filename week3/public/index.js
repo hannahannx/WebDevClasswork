@@ -39,7 +39,7 @@ async function ajaxSearch(artistName) {
     }catch (e) {
         alert(`Error: ${e}`);
     }
-}
+};
 
 
 //AJAX running when we click a button
