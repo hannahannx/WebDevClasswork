@@ -3,14 +3,14 @@
 This repository contains all the work completed for the Web Development class, organized by week. Each week introduces a new concept and builds upon the previous work. Below is an overview of the project structure and detailed information about each week’s class content.
 
 ## Table of Contents
-- [Week 1: Introduction to JSON Web APIs](#week-1JSON)
-- [Week 2: POST and PUT requests](#week-2POSTnPUT)
-- [Week 3: Promises and AJAX](#week-3PromisesnAJAX)
-- [Week 4: DOM](#week-4DOM)
-- [Week 5: Web Mapping with Leaflet and OpenStreetMap](#week-6Webmap)
-- [Week 6: React](#week-6React)
-- [Week 7: Further React](#week-7FReact)
-- [Week 8: Middleware, Sessions and Login Systems](#week-8Middlewear)
+- [Week 1: Introduction to JSON Web APIs](#week-1-introduction-to-json-web-apis)
+- [Week 2: POST and PUT requests](#week-2-post-and-put-requests)
+- [Week 3: Promises and AJAX](week-3-promises-and-ajax)
+- [Week 4: DOM](#week-4-dom)
+- [Week 5: Web Mapping with Leaflet and OpenStreetMap](#week-5-web-mapping-with-leaflet-and-openstreetmap)
+- [Week 6: React](#week-6-react)
+- [Week 7: Further React](#week-7-further-react)
+- [Week 8: Middleware, Sessions and Login Systems](#week-8-middleware-sessions-and-login-systems)
 
 ## Week 1: Introduction to JSON Web APIs
 ## Week 2: POST and PUT requests
